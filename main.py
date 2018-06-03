@@ -5,6 +5,7 @@ app = Flask(__name__, static_url_path="")
 
 clients = []
 
+
 def subscribe(email):
     if not re.match("[^@]+@[^@]+\.[^@]+", email):
         return False
@@ -15,6 +16,11 @@ def subscribe(email):
 @app.route("/", methods=["GET", "POST"])
 def home_page():
     return render_template("index.html")
+
+
+@app.route("/blog", methods=["GET", "POST"])
+def blog_page():
+    return render_template("blog.html")
 
 
 @app.route("/sub", methods=["GET", "POST"])
