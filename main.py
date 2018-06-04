@@ -1,16 +1,9 @@
 from flask import Flask, render_template, redirect, url_for, request
-import re
+import article
 
 app = Flask(__name__, static_url_path="")
 
 clients = []
-
-
-def subscribe(email):
-    if not re.match("[^@]+@[^@]+\.[^@]+", email):
-        return False
-
-    return True
 
 
 @app.route("/", methods=["GET", "POST"])
@@ -20,29 +13,9 @@ def home_page():
 
 @app.route("/blog", methods=["GET", "POST"])
 def blog_page():
-    return render_template("blog.html")
-
-
-@app.route("/sub", methods=["GET", "POST"])
-def subscribe_page():
-    if request.method == "POST":
-        email = request.form.get("email", "")
-        hasSubbed = subscribe(email)
-        if hasSubbed:
-            return "true"
-        else:
-            return "", 400
-
-
-@app.route("/msg", methods=["GET", "POST"])
-def message_page():
-    if request.method == "POST":
-        email = request.form.get("email", "")
-        hasSubbed = subscribe(email)
-        if hasSubbed:
-            return "true"
-        else:
-            return "", 400
+    terms = article.get_keyterms()
+    articles = article.get_articles()
+    return render_template("blog.html", terms=terms, articles=articles)
 
 
 if __name__ == "__main__":
