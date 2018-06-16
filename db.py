@@ -1,10 +1,12 @@
 import sqlite3
 
+PATH = "sqlite:///var/www/k3y/db/tpc.db"
+
 
 def get_data(request):
     try:
         # Creates or opens a file called mydb with a SQLite3 DB
-        db = sqlite3.connect('db/tpc.db')
+        db = sqlite3.connect(PATH)
         print("connected")
         # Get a cursor object
         cursor = db.cursor()
