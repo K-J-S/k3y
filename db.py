@@ -5,6 +5,7 @@ def get_data(request):
     try:
         # Creates or opens a file called mydb with a SQLite3 DB
         db = sqlite3.connect('db/tpc.db')
+        print("connected")
         # Get a cursor object
         cursor = db.cursor()
         # Check if table users does not exist and create it
@@ -13,6 +14,7 @@ def get_data(request):
 
     # Catch the exception
     except Exception as e:
+        print('{0}'.format(e))
         # Roll back any change if something goes wrong
         db.rollback()
         raise e
